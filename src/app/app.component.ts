@@ -3,9 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { Observable, Subject, Subscription, distinctUntilChanged, map, switchMap } from 'rxjs';
 import { Book } from './models/models';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { volume } from '../environments/environment.development';
 
 @Component({
   selector: 'app-root',
@@ -19,19 +18,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private query = new Subject<string>;
   protected books$!: Observable<Book[]>;
-
   public form!: FormGroup;
 
   constructor(private api: ApiService, private fb: FormBuilder) {}
   
   ngOnInit(): void {
     this.form = this.fb.group({
-      query: ''
+      query: ['', Validators.required]
     });
     this.pushQuery();
   }
 
   ngOnDestroy(): void {
+
   }
 
   private pushQuery() {

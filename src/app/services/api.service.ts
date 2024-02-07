@@ -16,6 +16,6 @@ export class ApiService {
 
     return this.http.get<{items:Book[]}>(url).pipe(
       map((book) => book.items),
-      (err) => err);
+      catchError((err) => of(err)));
   }
 }
